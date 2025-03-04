@@ -1,0 +1,85 @@
+{
+  "name": "cylinder",
+  "description": "Generates cylinders defined by midpoint coordinates at start positions (X, Y, Z), Vector for the axial direction and length of the cylinder along with a radius. For example a cylinder with [heightVectX, heightVectY, heightVectZ] = [0,2,2] Will point in the direction (0,2,2) and have the combined length of sqrt(4). It is important to fill always ALL coordinates of cylinder with a value, don't leave it empty if it's zero",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "baseCenterX": {
+        "type": "array",
+        "description": "X coordinate of the cylinder's base center.",
+        "items": {
+          "type": "number"
+        }
+      },
+      "baseCenterY": {
+        "type": "array",
+        "description": "Y coordinate of the cylinder's base center.",
+        "items": {
+          "type": "number"
+        }
+      },
+      "baseCenterZ": {
+        "type": "array",
+        "description": "Z coordinate of the cylinder's base center.",
+        "items": {
+          "type": "number"
+        }
+      },
+      "heightVectX": {
+        "type": "array",
+        "description": "Vector X-components defining the cylinder's axial direction and height",
+        "items": {
+          "type": "number"
+        }
+      },
+      "heightVectY": {
+        "type": "array",
+        "description": "Vector Y-components defining the cylinder's axial direction and height",
+        "items": {
+          "type": "number"
+        }
+      },
+      "heightVectZ": {
+        "type": "array",
+        "description": "Vector Z-components defining the cylinder's axial direction and height",
+        "items": {
+          "type": "number"
+        }
+      },
+      "radius": {
+        "type": "array",
+        "description": "Radius of each cylinder. Define this for each cylinder",
+        "items": {
+          "type": "number"
+        }
+      },
+      "subtraction": {
+        "type": "array",
+        "description": "Specifies if the block should be subtracted (True) from or added (False) to the existing geometry.",
+        "items": {
+          "type": "boolean"
+        },
+        "default": false
+      },
+      "cylinder_func": {
+        "type": "array",
+        "description": "Functionality of the cylinder: 0 for auxiliary geometry, 1 for force application boundary meaning objects subject to a force, 2 for structural connection markers (e.g., screw holes, fixture and so on).",
+        "items": {
+          "type": "number"
+        },
+        "default": 0
+      }
+    },
+    "required": [
+      "baseCenterX",
+      "baseCenterY",
+      "baseCenterZ",
+      "heightVectX",
+      "heightVectY",
+      "heightVectZ",
+      "radius",
+      "subtraction",
+      "cylinder_func"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "CreateCode",
+    "description": "Call this function, to create and run some code. This program will return the result of the code you have inserted. Use this to do Calculations and find positions of objects and vectors",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "PythonCode": {
+          "type": "string",
+          "description": "Insert the Code you want to run here",
+          "default": false
+        }
+      },
+      "required": ["PythonCode"]
+    }
+  }

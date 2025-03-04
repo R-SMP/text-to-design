@@ -1,0 +1,33 @@
+{
+  "name": "force",
+  "description": "Defines the direction and magnitude of a force. The direction is specified by a unit vector (x, y, z), indicating the force's direction in 3D space. The total force applied is given in kiloNewtons (kN).",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "forceUnitVector": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "description": "X component of the unit vector, indicating force direction along the X axis"
+          },
+          "y": {
+            "type": "number",
+            "description": "Y component of the unit vector, indicating force direction along the Y axis"
+          },
+          "z": {
+            "type": "number",
+            "description": "Z component of the unit vector, indicating force direction along the Z axis"
+          }
+        },
+        "required": ["x", "y", "z"],
+        "description": "Unit vector indicating the direction of the force in 3D space"
+      },
+      "totalForce": {
+        "type": "number",
+        "description": "Total force applied in kiloNewtons (kN)"
+      }
+    },
+    "required": ["forceUnitVector", "totalForce"]
+  }
+}

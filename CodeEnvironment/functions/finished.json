@@ -1,0 +1,15 @@
+{
+  "name": "finished",
+  "description": "ONLY Call this function if you called all other necessary functions.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "allFunctionsCalled": {
+        "type": "boolean",
+        "description": "Indicates whether all other necessary functions have been called. Set to true if all have been called",
+        "default": false
+      }
+    },
+    "required": ["allFunctionsCalled"]
+  }
+}

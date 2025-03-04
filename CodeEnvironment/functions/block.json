@@ -1,0 +1,59 @@
+{
+	"name": "block",
+	"description": "Create one or several rectangular blocks. Each block is positioned at the basepoint (x,y,z) from which it is expanded along the positiv axis directions with length, width and height. Required objects = ['x_size', 'y_size', 'z_size', 'x', 'y', 'z', 'subtraction']",
+	"parameters": {
+		"type": "object",
+		"properties": {
+			"x_size": {
+				"type": "array",
+				"description": "dimension for each of the blocks in x-direction",
+				"items": {
+					"type": "number"
+				}
+			},
+			"y_size": {
+				"type": "array",
+				"description": "dimension for each of the blocks in y-direction",
+				"items": {
+					"type": "number"
+				}
+			},
+			"z_size": {
+				"type": "array",
+				"description": "dimension for each of the blocks in z-direction",
+				"items": {
+					"type": "number"
+				}
+			},
+			"x": {
+				"type": "array",
+				"description": "distance of each block basepoint to origin in x-direction, default 0",
+				"items": {
+					"type": "number"
+				}
+			},
+			"y": {
+				"type": "array",
+				"description": "distance of each block basepoint to origin in y-direction, default 0",
+				"items": {
+					"type": "number"
+				}
+			},
+			"z": {
+				"type": "array",
+				"description": "distance of each block basepoint to origin in z-direction, default 0",
+				"items": {
+					"type": "number"
+				}
+			},
+			"subtraction": {
+				"type": "array",
+				"description": "Specifies if the block should be subtracted (True) from or added (False) to the existing geometry. The first block must be False, as it establishes the initial volume.",
+				"items": {
+					"type": "boolean"
+				}
+			}
+		},
+		"required": ["x_size", "y_size", "z_size", "x", "y", "z", "subtraction"]
+	}
+}
