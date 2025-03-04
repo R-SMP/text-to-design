@@ -16,3 +16,5 @@ Main interface of program. After cloning repository, need to change paths in Bas
 **task.json:** contains the descriptions of the system and each agent workflow (zeroShot, askBack, stepPlanning, visualInspection)
 
 **test_prompts.json:** contains text prompts
+
+### LLM provider key is to be placed in CodeEnvironment.
