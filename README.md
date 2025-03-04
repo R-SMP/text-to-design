@@ -17,4 +17,4 @@ Main interface of program. After cloning repository, need to change paths in Bas
 
 **test_prompts.json:** contains text prompts
 
-### LLM provider key is to be placed in CodeEnvironment.
+### LLM provider API key is to be stored inside CodeEnvironment.
