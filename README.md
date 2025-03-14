@@ -18,3 +18,6 @@ Main interface of program. After cloning repository, need to change paths in Bas
 **test_prompts.json:** contains text prompts
 
 ### LLM provider API key is to be stored inside CodeEnvironment.
+
+## link-to-results.txt
+Contains link to the Google Drive folder where the results are stored. People with the link can download all files.
