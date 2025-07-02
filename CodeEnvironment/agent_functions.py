@@ -11,7 +11,6 @@ def Agent1(user_input, instruction, messages, again):
     Return:
     -messages: updated log of conversation with LLM, includes clarifications
     '''
-
     global text
     #If click mode is activated, add user Click to Info:
     if click:

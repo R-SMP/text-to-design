@@ -1,0 +1,6 @@
+Metric,Mean,Std
+CLGD,0.03729,0.01124
+Chamfer Distance,0.0252,0.00844
+Hausdorff Distance,0.08393,0.04025
+IoU,0.98827,0.01932
+IoGT,0.99563,0.00857

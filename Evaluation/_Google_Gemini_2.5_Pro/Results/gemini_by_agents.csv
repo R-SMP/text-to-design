@@ -1,0 +1,3 @@
+AgentMode,CLGD_mean,CLGD_std,Chamfer Distance_mean,Chamfer Distance_std,Hausdorff Distance_mean,Hausdorff Distance_std,IoU_mean,IoU_std,IoGT_mean,IoGT_std
+StepPlanning,0.0376,0.01153,0.0255,0.00869,0.08599,0.04589,0.98952,0.01825,0.99586,0.00855
+ZeroShot,0.03697,0.01104,0.0249,0.00825,0.08187,0.03395,0.98703,0.02042,0.9954,0.00866

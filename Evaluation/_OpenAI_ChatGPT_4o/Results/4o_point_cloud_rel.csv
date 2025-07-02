@@ -1,0 +1,17 @@
+Geometry,Agent,CLGD Rel. Error (×GT-GT),Chamfer Rel. Error (×GT-GT),Hausdorff Rel. Error (×GT-GT)
+box,StepPlanning,0.0106,0.0093,0.0489
+box,ZeroShot,0.594,4.0124,3.2607
+box,askBack,0.0085,0.0089,0.0059
+box,visualInspection,-0.0004,-0.0006,0.0205
+right_angle,StepPlanning,0.3356,1.7848,2.5544
+right_angle,ZeroShot,0.1384,0.3431,0.7532
+right_angle,askBack,0.2651,0.7858,1.1792
+right_angle,visualInspection,0.0903,0.5879,0.5049
+toycar_new,StepPlanning,0.0251,0.0149,0.1946
+toycar_new,ZeroShot,0.1625,0.6542,0.6137
+toycar_new,askBack,0.0532,0.0461,0.3167
+toycar_new,visualInspection,0.0559,0.0453,0.1775
+u_profile,StepPlanning,0.0136,0.0066,0.1337
+u_profile,ZeroShot,0.4968,0.38,0.8836
+u_profile,askBack,0.1506,0.1076,0.3359
+u_profile,visualInspection,0.0006,0.003,0.0303

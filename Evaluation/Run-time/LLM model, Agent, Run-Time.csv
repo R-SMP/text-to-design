@@ -1,0 +1,11 @@
+LLM model, Agent, Run-Time[s]
+ChatGPT 4o, zeroShot, 9
+ChatGPT 4o, stepPlanning, 15
+ChatGPT o3, zeroShot, 24
+ChatGPT o3, stepPlanning, 23
+Claude Opus 4, zeroShot, 28
+Claude Opus 4, stepPlanning, 30
+Gemini 2.5 Pro, zeroShot, 28
+Gemini 2.5 Pro, stepPlanning, 33
+deepseek-chat, zeroShot, 32
+deepseek-chat, stepPlanning, 63

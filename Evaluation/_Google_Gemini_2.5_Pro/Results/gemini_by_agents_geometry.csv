@@ -1,0 +1,9 @@
+Object Group,AgentMode,CLGD_mean,CLGD_std,Chamfer Distance_mean,Chamfer Distance_std,Hausdorff Distance_mean,Hausdorff Distance_std,IoU_mean,IoU_std,IoGT_mean,IoGT_std
+box,StepPlanning,0.04427,0.00089,0.03059,0.00039,0.08376,0.00738,1.0,0.0,1.0,0.0
+box,ZeroShot,0.04354,0.00066,0.0304,0.00033,0.08358,0.00904,1.0,0.0,1.0,0.0
+right_angle,StepPlanning,0.04501,0.001,0.03143,0.00084,0.09195,0.0082,0.98661,0.01805,0.99958,0.00162
+right_angle,ZeroShot,0.04462,0.00129,0.03124,0.00076,0.09781,0.01791,0.98231,0.02328,0.99916,0.00325
+toycar_new,StepPlanning,0.04276,0.00513,0.02874,0.00486,0.13549,0.05515,0.97146,0.022,0.98388,0.00998
+toycar_new,ZeroShot,0.04136,0.00334,0.0268,0.00204,0.11326,0.02319,0.9658,0.01864,0.98242,0.00803
+u_profile,StepPlanning,0.01835,0.00027,0.01125,0.00011,0.03277,0.00306,1.0,0.0,1.0,0.0
+u_profile,ZeroShot,0.01837,0.00033,0.01115,0.00014,0.03281,0.00264,1.0,0.0,1.0,0.0

@@ -1,1 +1,1 @@
-C:\Users\rsanmiguel\OneDrive - ETH Zurich\Documents\01_Work\02_Papers\01_Own_Papers\01_LLM-CAD\Code\Respository\text-to-design\Results\TestPrompts_7
+C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\log\TestPrompts_737

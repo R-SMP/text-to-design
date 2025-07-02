@@ -1,0 +1,5 @@
+Object Group,CLGD_mean,CLGD_std,Chamfer Distance_mean,Chamfer Distance_std,Hausdorff Distance_mean,Hausdorff Distance_std,IoU_mean,IoU_std,IoGT_mean,IoGT_std
+box,0.04391,0.00085,0.0305,0.00037,0.08367,0.00811,1.0,0.0,1.0,0.0
+right_angle,0.04481,0.00115,0.03133,0.00079,0.09488,0.01401,0.98446,0.02058,0.99937,0.00253
+toycar_new,0.04206,0.00431,0.02777,0.00379,0.12437,0.04308,0.96863,0.02024,0.98315,0.00893
+u_profile,0.01836,0.0003,0.0112,0.00013,0.03279,0.00281,1.0,0.0,1.0,0.0

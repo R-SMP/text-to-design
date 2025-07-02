@@ -1,0 +1,1 @@
+{'x_size': [204], 'y_size': [284], 'z_size': [148], 'x': [8], 'y': [8], 'z': [12], 'subtraction': [True]}

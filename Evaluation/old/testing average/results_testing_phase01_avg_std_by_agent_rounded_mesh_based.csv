@@ -1,0 +1,19 @@
+Object Name,AgentMode,IoU_mean,IoU_std,IoGT_mean,IoGT_std
+box_a,StepPlanning,1.0,0.0,1.0,0.0
+box_a,ZeroShot,0.628233,0.339541,0.631245,0.336717
+box_b,StepPlanning,1.0,0.0,1.0,0.0
+box_b,ZeroShot,0.589909,0.375092,0.601524,0.364248
+box_c,StepPlanning,0.999999,1e-06,0.999999,0.0
+box_c,ZeroShot,0.422132,0.333235,0.439609,0.321084
+right_angle_a,StepPlanning,0.925313,0.033202,0.979745,0.018798
+right_angle_a,ZeroShot,1.0,0.0,1.0,0.0
+right_angle_b,StepPlanning,0.975546,0.033484,0.994967,0.006891
+right_angle_b,ZeroShot,0.588756,0.025084,0.749331,0.023174
+right_angle_c,StepPlanning,0.423845,0.24529,0.578564,0.206597
+right_angle_c,ZeroShot,0.840878,0.293099,0.898251,0.227515
+u_profile_a,StepPlanning,0.933332,1e-06,0.999999,1e-06
+u_profile_a,ZeroShot,0.582607,0.362413,0.690474,0.270426
+u_profile_b,StepPlanning,1.0,0.0,1.0,0.0
+u_profile_b,ZeroShot,0.999999,0.0,1.0,0.0
+u_profile_c,StepPlanning,0.987499,0.027951,1.0,0.0
+u_profile_c,ZeroShot,0.659999,0.089443,0.9,0.223607

@@ -1,0 +1,14 @@
+role: "model"
+parts {
+  function_call {
+    name: "finished"
+    args {
+      fields {
+        key: "allFunctionsCalled"
+        value {
+          bool_value: true
+        }
+      }
+    }
+  }
+}

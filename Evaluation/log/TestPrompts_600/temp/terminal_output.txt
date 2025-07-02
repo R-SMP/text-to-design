@@ -1,0 +1,44 @@
+Loading Test-Prompts
+Skipping Step 1
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+ChatGPT Answer:
+ChatCompletionMessage(content='To create the described rectangular box using function calls, follow these steps:\n\n1. **Create the Outer Box:**\n   - Use the `block` function to create the outer dimensions of the box. This will be a solid block with dimensions 300mm (length) x 220mm (width) x 160mm (height).\n   - Position this block at the origin (0,0,0).\n\n2. **Create the Inner Box for Subtraction:**\n   - Use the `block` function again to create an inner block that will be subtracted from the outer block to form the walls and bottom of the box.\n   - The inner block should have dimensions reduced by twice the wall thickness for the width and length, and by the wall thickness for the height. Thus, the dimensions will be:\n     - Length: 300mm - 2 * 8mm = 284mm\n     - Width: 220mm - 2 * 8mm = 204mm\n     - Height: 160mm - 12mm = 148mm\n   - Position this block at (8, 8, 12) to ensure the walls and bottom are correctly formed.\n\n3. **Subtract the Inner Box from the Outer Box:**\n   - Set the `subtraction` parameter to `True` for the inner block to subtract it from the outer block, creating the open-top box with specified wall and bottom thickness.\n\nBy following these steps, you will create a rectangular box with the specified dimensions and features. Let me know when you want to proceed with the function call preparation.', role='assistant', function_call=None, tool_calls=None, refusal=None)
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+ChatGPT Answer:
+ChatCompletionMessage(content=None, role='assistant', function_call=FunctionCall(arguments='{"x_size":[300],"y_size":[220],"z_size":[160],"x":[0],"y":[0],"z":[0],"subtraction":[false]}', name='block'), tool_calls=None, refusal=None)
+--------------------------Parsing Function Arguments -------------------------------
+Ensuring boolean list for key 'subtraction' remains as booleans.
+{'x_size': [300], 'y_size': [220], 'z_size': [160], 'x': [0], 'y': [0], 'z': [0], 'subtraction': [False]}
+--------------------- Function Call Found ---------------------
+Function name:
+block
+calling function:
+generated answer: successfully created block object. Call now the next function!
+{'role': 'assistant', 'function_call': {'name': 'block', 'arguments': "{'x_size': [300], 'y_size': [220], 'z_size': [160], 'x': [0], 'y': [0], 'z': [0], 'subtraction': [False]}"}}
+Calling for next Function
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+ChatGPT Answer:
+ChatCompletionMessage(content=None, role='assistant', function_call=FunctionCall(arguments='{"x_size":[284],"y_size":[204],"z_size":[148],"x":[8],"y":[8],"z":[12],"subtraction":[true]}', name='block'), tool_calls=None, refusal=None)
+--------------------------Parsing Function Arguments -------------------------------
+Ensuring boolean list for key 'subtraction' remains as booleans.
+{'x_size': [284], 'y_size': [204], 'z_size': [148], 'x': [8], 'y': [8], 'z': [12], 'subtraction': [True]}
+--------------------- Function Call Found ---------------------
+Function name:
+block
+calling function:
+generated answer: successfully created block object. Call now the next function!
+{'role': 'assistant', 'function_call': {'name': 'block', 'arguments': "{'x_size': [284], 'y_size': [204], 'z_size': [148], 'x': [8], 'y': [8], 'z': [12], 'subtraction': [True]}"}}
+Calling for next Function
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+ChatGPT Answer:
+ChatCompletionMessage(content=None, role='assistant', function_call=FunctionCall(arguments='{"allFunctionsCalled":true}', name='finished'), tool_calls=None, refusal=None)
+--------------------------Parsing Function Arguments -------------------------------
+No lists found in the arguments.
+{'allFunctionsCalled': True}
+--------------------- Function Call Found ---------------------
+Function name:
+finished
+Called all Functions
+Created directory: P:\01_Research_projects\2023_DNT_LLM_in_Engineering_Applications\04_Paper\Experiments\Different GPT\ChatGPT\TestPrompts_60
+Copied temp to P:\01_Research_projects\2023_DNT_LLM_in_Engineering_Applications\04_Paper\Experiments\Different GPT\ChatGPT\TestPrompts_60
+Copied log.json to P:\01_Research_projects\2023_DNT_LLM_in_Engineering_Applications\04_Paper\Experiments\Different GPT\ChatGPT\TestPrompts_60

@@ -1,0 +1,9 @@
+Geometry,Agent,CLGD Rel. Error (×GT-GT),Chamfer Rel. Error (×GT-GT),Hausdorff Rel. Error (×GT-GT)
+box,StepPlanning,0.0173,0.007,0.0072
+box,ZeroShot,0.0005,0.0007,0.0051
+right_angle,StepPlanning,-0.0015,-0.0032,0.0759
+right_angle,ZeroShot,-0.0102,-0.0093,0.1444
+toycar_new,StepPlanning,0.1341,0.1371,0.6602
+toycar_new,ZeroShot,0.097,0.0604,0.3878
+u_profile,StepPlanning,-0.0027,0.0048,0.062
+u_profile,ZeroShot,-0.0016,-0.0041,0.0633
