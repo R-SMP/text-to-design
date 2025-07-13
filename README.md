@@ -59,7 +59,9 @@ IMPORTANT for GEMINI: Add your json key file from your service-acc into local pa
 
 
 
-Process of (zeroShot/stepPlanning/askBack):
+
+
+**Process of (zeroShot,stepPlanning and askBack):**
 
 * start: True (Once)
 
@@ -85,7 +87,7 @@ wait
 
 
 
-Process of (visualInspection):
+**Process of (visualInspection):**
 
 * start: True (Once)
 

@@ -2,88 +2,78 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-# Model name variable
-model = "ChatGPT 4o"
+# === GLOBAL CONFIG ===
+plt.rcParams.update({
+    'font.family': 'Times New Roman',
+    'axes.titlesize': 8,
+    'axes.labelsize': 7,
+    'xtick.labelsize': 6,
+    'ytick.labelsize': 6,
+    'legend.fontsize': 6,
+    'figure.dpi': 300
+})
 
-# Load the CSV file
-csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_point_cloud_rel.csv"
+# === SETTINGS ===
+model = "ChatGPT 4o"
+csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_point_cloud_rel.csv"
+save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\4o"
+os.makedirs(save_dir, exist_ok=True)
+
+geometry_order = ["box", "u-profile", "right-angle", "toy-car"]
+geometry_map = {
+    "box": "box",
+    "u-profile": "u_profile",
+    "right-angle": "right_angle",
+    "toy-car": "toycar_new"
+}
+
+agent_order = ["ZeroShot", "StepPlanning", "askBack", "visualInspection"]
+
+# === LOAD CSV ===
 df = pd.read_csv(csv_path)
 
-# List of geometries
-geometries = df["Geometry"].unique()
-
-# Desired order for Agent and Geometry
-if model == "ChatGPT 4o":
-    agent_order = ["ZeroShot", "StepPlanning", "askBack", "visualInspection"]
-else:
-    agent_order = ["ZeroShot", "StepPlanning"]
-
-geometry_order = ["box", "u_profile", "right_angle", "toycar_new"]
-
-# For each geometry in the desired order, plot CLGD, Chamfer, and Hausdorff Rel. Error for all agents in the desired order
+# === LOOP OVER GEOMETRIES ===
 for geom in geometry_order:
-    subset = df[df["Geometry"] == geom]
-    subset = subset.set_index("Agent").loc[agent_order].reset_index()
-    x = subset["Agent"]
-    clgd = subset["CLGD Rel. Error (×GT-GT)"]
-    chamfer = subset["Chamfer Rel. Error (×GT-GT)"]
-    hausdorff = subset["Hausdorff Rel. Error (×GT-GT)"]
+    df_geom_name = geometry_map[geom]
 
-    width = 0.25  # width of the bars
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ind = range(len(x))
+    # Only use available agents for this geometry
+    available_agents = df[df["Geometry"] == df_geom_name]["Agent"].unique()
+    agents_in_plot = [a for a in agent_order if a in available_agents]
 
-    # Plot bars (Relative Error)
-    ax.bar([i - width for i in ind], clgd, width, label='CLGD Rel. Error', color='goldenrod')
-    ax.bar(ind, chamfer, width, label='Chamfer Rel. Error', color='cornflowerblue')
-    ax.bar([i + width for i in ind], hausdorff, width, label='Hausdorff Rel. Error', color='mediumseagreen')
+    if not agents_in_plot:
+        print(f"[INFO] Skipping geometry '{geom}' – no matching agents found.")
+        continue
 
-    # Labels and title
-    ax.set_ylabel('Relative Error (×GT-GT)')
-    ax.set_title(f'CLGD, Chamfer & Hausdorff Rel. Error by Agent for {geom} ({model})')
-    ax.set_xticks(ind)
-    ax.set_xticklabels(x)
-    ax.set_ylim(0, max(clgd.max(), chamfer.max(), hausdorff.max()) * 1.1)
+    subset = df[df["Geometry"] == df_geom_name].set_index("Agent").reindex(agents_in_plot).reset_index()
 
-    # Move legend to upper right outside the plot
-    ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
+    if subset.isnull().values.any():
+        print(f"[WARN] Missing values for geometry '{geom}':\n", subset)
 
-    plt.tight_layout(rect=[0, 0, 0.85, 1])  # Make space for legend on the right
+    # Bar positions
+    ind = range(len(agents_in_plot))
+    width = 0.25
 
-    # Save each plot as a PNG file in the specified folder
-    save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design\Evaluation\plots\4o"
-    os.makedirs(save_dir, exist_ok=True)
-    save_path = os.path.join(save_dir, f"{geom}_CLGD_Chamfer_Hausdorff_Rel_Error.png")
-    plt.savefig(save_path, bbox_inches='tight')  # Ensure nothing is cut off
-    plt.close(fig)
-    plt.show()
+    # === RELATIVE ERROR PLOT ===
+    try:
+        clgd_rel = subset["CLGD Rel. Error (×GT-GT)"]
+        chamfer_rel = subset["Chamfer Rel. Error (×GT-GT)"]
+        hausdorff_rel = subset["Hausdorff Rel. Error (×GT-GT)"]
 
-    # --- NEW: Plot absolute values (Gen-GT) ---
-    clgd_abs = subset["CLGD (Gen-GT)"]
-    chamfer_abs = subset["Chamfer (Gen-GT)"]
-    hausdorff_abs = subset["Hausdorff (Gen-GT)"]
+        fig, ax = plt.subplots(figsize=(3.2, 2.4))
+        ax.bar([i - width for i in ind], clgd_rel, width, label='CLGD', color='goldenrod')
+        ax.bar(ind, chamfer_rel, width, label='Chamfer', color='cornflowerblue')
+        ax.bar([i + width for i in ind], hausdorff_rel, width, label='Hausdorff', color='mediumseagreen')
 
-    fig2, ax2 = plt.subplots(figsize=(8, 5))
+        ax.set_ylabel('Relative Error (×GT-GT)')
+        ax.set_title(f'{geom} – Relative Error ({model})')
+        ax.set_xticks(ind)
+        ax.set_xticklabels(agents_in_plot)
+        ax.set_ylim(0, max(clgd_rel.max(), chamfer_rel.max(), hausdorff_rel.max()) * 1.1)
+        ax.legend(loc='upper right', frameon=False)
+        plt.tight_layout()
 
-    # Plot bars (Absolute Values)
-    ax2.bar([i - width for i in ind], clgd_abs, width, label='CLGD (Gen-GT)', color='goldenrod')
-    ax2.bar(ind, chamfer_abs, width, label='Chamfer (Gen-GT)', color='cornflowerblue')
-    ax2.bar([i + width for i in ind], hausdorff_abs, width, label='Hausdorff (Gen-GT)', color='mediumseagreen')
-
-    # Labels and title
-    ax2.set_ylabel('Absolute Value (Gen-GT)')
-    ax2.set_title(f'CLGD, Chamfer & Hausdorff Absolute Value by Agent for {geom} ({model})')
-    ax2.set_xticks(ind)
-    ax2.set_xticklabels(x)
-    ax2.set_ylim(0, max(clgd_abs.max(), chamfer_abs.max(), hausdorff_abs.max()) * 1.1)
-
-    # Move legend to upper right outside the plot
-    ax2.legend(loc='upper left', bbox_to_anchor=(1, 1))
-
-    plt.tight_layout(rect=[0, 0, 0.85, 1])  # Make space for legend on the right
-
-    # Save each absolute value plot as a PNG file
-    save_path_abs = os.path.join(save_dir, f"{geom}_CLGD_Chamfer_Hausdorff_Absolute_Value.png")
-    plt.savefig(save_path_abs, bbox_inches='tight')
-    plt.close(fig2)
-    plt.show()
+        fig.savefig(os.path.join(save_dir, f"{geom}_rel_error.pdf"), bbox_inches='tight')
+        fig.savefig(os.path.join(save_dir, f"{geom}_rel_error.png"), bbox_inches='tight', dpi=300)
+        plt.close(fig)
+    except KeyError as e:
+        print(f"[ERROR] Missing column in geometry '{geom}': {e}")

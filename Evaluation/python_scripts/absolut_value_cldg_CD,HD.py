@@ -1,16 +1,35 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+
+# === GLOBAL CONFIG ===
+plt.rcParams.update({
+    'font.family': 'Times New Roman',
+    'axes.titlesize': 8,
+    'axes.labelsize': 7,
+    'xtick.labelsize': 6,
+    'ytick.labelsize': 6,
+    'legend.fontsize': 6,
+    'figure.dpi': 300
+})
+
+# === SETTINGS ===
 model = "ChatGPT 4o"
-# Set the path to the CSV file and the directory for saving plots
-csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_by_agents_geometry.csv"
-plot_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design\Evaluation\plots\4o"
-os.makedirs(plot_dir, exist_ok=True)
+csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_by_agents_geometry.csv"
+save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\4o"
+os.makedirs(save_dir, exist_ok=True)
 
-# Read CSV
+geometry_order = ["box", "u-profile", "right-angle", "toy-car"]
+geometry_map = {
+    "box": "box",
+    "u-profile": "u_profile",
+    "right-angle": "right_angle",
+    "toy-car": "toycar_new"
+}
+agent_order = ["ZeroShot", "StepPlanning", "askBack", "visualInspection"]
+
+# === LOAD CSV ===
 df = pd.read_csv(csv_path)
-
-# Rename columns for easier access
 df = df.rename(columns={
     'Object Group': 'Geometry',
     'AgentMode': 'Agent',
@@ -19,35 +38,36 @@ df = df.rename(columns={
     'Hausdorff Distance_mean': 'Hausdorff Distance'
 })
 
-# Desired order for plotting
-agent_order = ["ZeroShot", "StepPlanning", "askBack", "visualInspection"]
-geometry_order = ["box", "u_profile", "right_angle", "toycar_new"]
-
+# === PLOT LOOP ===
 for geom in geometry_order:
-    subset = df[df['Geometry'] == geom]
-    # Ensure correct agent order and fill missing agents with zeros
-    subset = subset.set_index('Agent').reindex(agent_order).fillna(0).reset_index()
-    x = subset['Agent']
+    geom_name = geometry_map[geom]
+    subset = df[df['Geometry'] == geom_name]
+    subset = subset.set_index('Agent').reindex(agent_order).reset_index()
+
+    if subset.isnull().values.any():
+        print(f"[WARN] Missing values for geometry '{geom}':\n", subset)
+
     clgd = subset['CLGD']
     chamfer = subset['Chamfer Distance']
     hausdorff = subset['Hausdorff Distance']
 
     width = 0.25
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ind = range(len(x))
+    ind = range(len(agent_order))
 
-    # Plot bars
+    # === ABSOLUTE VALUE PLOT ===
+    fig, ax = plt.subplots(figsize=(3.2, 2.4))
     ax.bar([i - width for i in ind], clgd, width, label='CLGD', color='goldenrod')
-    ax.bar(ind, chamfer, width, label='Chamfer Distance', color='cornflowerblue')
-    ax.bar([i + width for i in ind], hausdorff, width, label='Hausdorff Distance', color='mediumseagreen')
+    ax.bar(ind, chamfer, width, label='Chamfer', color='cornflowerblue')
+    ax.bar([i + width for i in ind], hausdorff, width, label='Hausdorff', color='mediumseagreen')
 
     ax.set_ylabel('Mean Absolute Value')
-    ax.set_title(f'CLGD, Chamfer & Hausdorff Distance (mean) by Agent for {geom} ({model})')
+    ax.set_title(f'{geom} – Distance Metrics (mean, {model})')
     ax.set_xticks(ind)
-    ax.set_xticklabels(x)
+    ax.set_xticklabels(agent_order)
     ax.set_ylim(0, max(clgd.max(), chamfer.max(), hausdorff.max()) * 1.1)
-    ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
-    plt.tight_layout(rect=[0, 0, 0.85, 1])
-    save_path = os.path.join(r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design\Evaluation\plots\4o", f"{geom}_CLGD_Chamfer_Hausdorff_Absolute_Mean.png")
-    plt.savefig(save_path, bbox_inches='tight')
+    ax.legend(loc='upper right', frameon=False)
+    plt.tight_layout()
+
+    fig.savefig(os.path.join(save_dir, f"{geom}_abs_mean_error.pdf"), bbox_inches='tight')
+    fig.savefig(os.path.join(save_dir, f"{geom}_abs_mean_error.png"), bbox_inches='tight', dpi=300)
     plt.close(fig)

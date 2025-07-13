@@ -2,80 +2,86 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-# Model name variable
-model = "ChatGPT 4o"  
+# === GLOBAL CONFIG ===
+plt.rcParams.update({
+    'font.family': 'Times New Roman',
+    'axes.titlesize': 8,
+    'axes.labelsize': 7,
+    'xtick.labelsize': 6,
+    'ytick.labelsize': 6,
+    'legend.fontsize': 6,
+    'figure.dpi': 300
+})
 
-# Load the CSV file
-csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_by_agents_geometry.csv"
+# === SETTINGS ===
+model = "ChatGPT 4o"
+csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_by_agents_geometry.csv"
+save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\4o"
+os.makedirs(save_dir, exist_ok=True)
+
+# Geometry display order and mapping
+geometry_order = ["box", "u-profile", "right-angle", "toy-car"]
+geometry_map = {
+    "box": "box",
+    "u-profile": "u_profile",
+    "right-angle": "right_angle",
+    "toy-car": "toycar_new"
+}
+
+agent_order = ["ZeroShot", "StepPlanning", "askBack", "visualInspection"]
+
+# === LOAD CSV ===
 df = pd.read_csv(csv_path)
 
-# List of object groups
-object_groups = df["Object Group"].unique()
-agents = df["AgentMode"].unique()
+# === LOOP OVER GEOMETRIES ===
+for geom in geometry_order:
+    df_geom_name = geometry_map[geom]
+    subset = df[df["Object Group"] == df_geom_name]
 
-# Desired order for AgentMode and Object Group
-if model == "ChatGPT 4o":
-    agent_order = ["ZeroShot", "StepPlanning", "askBack", "visualInspection"]
-else:
-    agent_order = ["ZeroShot", "StepPlanning"]
+    available_agents = [a for a in agent_order if a in subset["AgentMode"].unique()]
+    if not available_agents:
+        print(f"[INFO] Skipping '{geom}' – no valid agents.")
+        continue
 
-object_order = ["box", "u_profile", "right_angle", "toycar_new"]
+    subset = subset.set_index("AgentMode").reindex(available_agents).reset_index()
 
-# For each object group in the desired order, plot IoU and IoGT for all agents in the desired order
-for obj in object_order:
-    subset = df[df["Object Group"] == obj]
-    subset = subset.set_index("AgentMode").loc[agent_order].reset_index()
+    # Data
     x = subset["AgentMode"]
     iou = subset["IoU_mean"]
     iogt = subset["IoGT_mean"]
-
-    width = 0.35  # width of the bars
-    fig, ax = plt.subplots(figsize=(7, 5))
     ind = range(len(x))
+    width = 0.35
 
-    # Plot bars
+    # Plot
+    fig, ax = plt.subplots(figsize=(3.2, 2.4))
     bars_iou = ax.bar([i - width/2 for i in ind], iou, width, label='IoU', color='skyblue')
     bars_iogt = ax.bar([i + width/2 for i in ind], iogt, width, label='IoGT', color='orange')
 
-    # Add values inside the bars (small font)
-    for bar in bars_iou:
+    # Text inside bars
+    for bar in bars_iou + bars_iogt:
         height = bar.get_height()
+        label_y = min(height * 0.5, height - 0.05, 1.0)
         ax.text(
             bar.get_x() + bar.get_width() / 2,
-            height * 0.5,
+            label_y,
             f"{height:.2f}",
             ha='center',
             va='center',
-            fontsize=7,
-            color='black'
-        )
-    for bar in bars_iogt:
-        height = bar.get_height()
-        ax.text(
-            bar.get_x() + bar.get_width() / 2,
-            height * 0.5,
-            f"{height:.2f}",
-            ha='center',
-            va='center',
-            fontsize=7,
+            fontsize=6,
             color='black'
         )
 
-    # Labels and title
     ax.set_ylabel('Score')
-    ax.set_title(f'IoU and IoGT by Agent for {obj} ({model})')
+    ax.set_title(f'{geom} – IoU and IoGT ({model})')
     ax.set_xticks(ind)
     ax.set_xticklabels(x)
-    ax.set_ylim(0, 1.1)
+    ax.set_ylim(0, 1.2)  # Plothöhe
+    ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])  # Achsenskalierung sichtbar nur bis 1.0
+    ax.legend(loc='upper right', frameon=False)
+    plt.tight_layout()
 
-    # Move legend to upper right outside the plot
-    ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
-
-    plt.tight_layout(rect=[0, 0, 0.85, 1])  # Make space for legend on the right
-
-    # Save each plot as a PNG file in the specified folder
-    save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design\Evaluation\plots\4o"
-    os.makedirs(save_dir, exist_ok=True)  # Ensure the directory exists
-    save_path = os.path.join(save_dir, f"{obj}_IoU_IoGT.png")
-    plt.savefig(save_path, bbox_inches='tight')  # Ensure nothing is cut
-    plt.show()
+    # Save
+    filename_base = f"{geom}_IoU_IoGT"
+    fig.savefig(os.path.join(save_dir, f"{filename_base}.pdf"), bbox_inches='tight')
+    fig.savefig(os.path.join(save_dir, f"{filename_base}.png"), bbox_inches='tight', dpi=300)
+    plt.close(fig)
