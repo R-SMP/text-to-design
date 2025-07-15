@@ -65,6 +65,7 @@ def plot_iou(agent_mode, ax):
     ax.set_xticks([idx + 2 * bar_width for idx in x])
     ax.set_xticklabels(["box", "u-profile", "right-angle", "toy-car"])
     ax.set_ylabel("IoU")
+    ax.set_xlabel("Geometry")
     ax.set_title(f"{agent_mode} – IoU by Geometry")
     ax.set_ylim(0, 1.4)  # Headroom
     ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])  # Skala limitiert

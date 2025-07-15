@@ -14,9 +14,9 @@ plt.rcParams.update({
 })
 
 # === SETTINGS ===
-model = "ChatGPT 4o"
-csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_by_agents_geometry.csv"
-save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\4o"
+model = "Gemini 2.5 Pro"
+csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_Google_Gemini_2.5_Pro\Results\gemini_by_agents_geometry.csv"
+save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\gemini"
 os.makedirs(save_dir, exist_ok=True)
 
 # Geometry display order and mapping
@@ -72,10 +72,11 @@ for geom in geometry_order:
         )
 
     ax.set_ylabel('Score')
+    ax.set_xlabel('Agent')
     ax.set_title(f'{geom} – IoU and IoGT ({model})')
     ax.set_xticks(ind)
     ax.set_xticklabels(x)
-    ax.set_ylim(0, 1.2)  # Plothöhe
+    ax.set_ylim(0, 1.25)  # Plothöhe
     ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])  # Achsenskalierung sichtbar nur bis 1.0
     ax.legend(loc='upper right', frameon=False)
     plt.tight_layout()

@@ -53,7 +53,7 @@ display_labels = [display_names[model] for model in models]
 fig, ax = plt.subplots(figsize=(3.2, 2.4))
 bars = ax.bar(display_labels, iou_means, color=bar_colors)
 ax.set_ylabel("IoU (Mean)")
-ax.set_xlabel("LLM Model")
+ax.set_xlabel("LLM")
 ax.set_title("Overall IoU Performance")
 ax.set_ylim(0, 1.5)
 ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])

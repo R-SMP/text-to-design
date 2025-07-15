@@ -14,9 +14,24 @@ plt.rcParams.update({
 })
 
 # === SETTINGS ===
-model = "ChatGPT 4o"
-csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_by_agents_geometry.csv"
-save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\4o"
+model = "Gemini 2.5 Pro"  # Change this to the desired model
+if model == "ChatGPT o3":
+    csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_OpenAI_ChatGPT_o3\Results\o3_by_agents_geometry.csv"
+    save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\o3"
+elif model == "ChatGPT 4o":
+    csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_OpenAI_ChatGPT_4o\Results\4o_by_agents_geometry.csv"
+    save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\4o"
+elif model == "Claude Opus 4":
+    csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_Anthropic_Claude_Opus_4\Results\opus_4_by_agents_geometry.csv"
+    save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\claude"
+elif model == "DeepSeek Chat":
+    csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_DeepSeek_DeepSeek_chat\Results\deepseek_by_agents_geometry.csv"
+    save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\deepseek"
+elif model == "Gemini 2.5 Pro":
+    csv_path = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\_Google_Gemini_2.5_Pro\Results\gemini_by_agents_geometry.csv"
+    save_dir = r"C:\Users\natha\OneDrive\Desktop\OneDrive - ETH Zurich\GitHub\text-to-design-clean\Evaluation\plots\paper_plots\gemini"
+
+
 os.makedirs(save_dir, exist_ok=True)
 
 geometry_order = ["box", "u-profile", "right-angle", "toy-car"]
@@ -61,6 +76,7 @@ for geom in geometry_order:
     ax.bar([i + width for i in ind], hausdorff, width, label='Hausdorff', color='mediumseagreen')
 
     ax.set_ylabel('Mean Absolute Value')
+    ax.set_xlabel('Agent')
     ax.set_title(f'{geom} – Distance Metrics (mean, {model})')
     ax.set_xticks(ind)
     ax.set_xticklabels(agent_order)

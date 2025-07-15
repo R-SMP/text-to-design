@@ -36,8 +36,9 @@ bars = ax.bar(
 )
 
 ax.set_ylabel("IoU")
+ax.set_xlabel("Agent")
 ax.set_title(f"IoU Comparison ({model})")
-ax.set_ylim(0, 1.05)
+ax.set_ylim(0, 1.1)
 ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
 ax.grid(axis='y', linestyle='--', linewidth=0.5, alpha=0.5)
 ax.tick_params(axis='both', length=2)
